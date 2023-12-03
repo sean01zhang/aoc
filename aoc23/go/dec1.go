@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	file, err := os.Open("./input.txt")
+	file, err := os.Open("./input/dec1.txt")
 	defer file.Close()
 	if err != nil {
 		fmt.Println(err)
