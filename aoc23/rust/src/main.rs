@@ -12,7 +12,11 @@ fn main() {
     // days::dec5::p2_stupid("./input/dec5.txt");
     // days::dec6::p1("./input/dec6.txt");
     // days::dec6::p2("./input/dec6.txt");
-    days::dec7::p1("./input/dec7.txt");
-    days::dec7::p2("./input/dec7.txt");
-    // days::dec7::p1("./input/example7.txt");
+    // days::dec7::p1("./input/dec7.txt");
+    // days::dec7::p2("./input/dec7.txt");
+    // days::dec8::p1("./input/dec8.txt");
+    // days::dec8::p2("./input/dec8.txt");
+    // days::dec9::p1("./input/dec9.txt");
+    // days::dec9::p2("./input/dec9.txt");
+    days::dec10::p1("./input/dec10.txt");
 }
