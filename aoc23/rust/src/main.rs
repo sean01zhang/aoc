@@ -18,5 +18,9 @@ fn main() {
     // days::dec8::p2("./input/dec8.txt");
     // days::dec9::p1("./input/dec9.txt");
     // days::dec9::p2("./input/dec9.txt");
-    days::dec10::p1("./input/dec10.txt");
+    // days::dec10::p1("./input/dec10.txt");
+    // days::dec10::p2("./input/example10.txt");
+    // days::dec10::p2("./input/dec10.txt");
+    days::dec11::p1("./input/day11.txt");
+    days::dec11::p2("./input/day11.txt");
 }
