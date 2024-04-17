@@ -21,6 +21,7 @@ fn main() {
     // days::dec10::p1("./input/dec10.txt");
     // days::dec10::p2("./input/example10.txt");
     // days::dec10::p2("./input/dec10.txt");
-    days::dec11::p1("./input/day11.txt");
-    days::dec11::p2("./input/day11.txt");
+    // days::dec11::p1("./input/day11.txt");
+    // days::dec11::p2("./input/day11.txt");
+    days::dec12::p1("./input/dec12.txt");
 }
