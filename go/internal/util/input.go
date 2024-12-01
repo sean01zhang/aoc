@@ -13,7 +13,7 @@ func (a AdventUtils) GetInputFromFile(path string) (string, error) {
 		return "", err
 	}
 	defer f.Close()
-	
+
 	if b, err := io.ReadAll(f); err != nil {
 		return "", err
 	} else {

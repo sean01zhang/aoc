@@ -23,7 +23,7 @@ var twentyFourCmd = &cobra.Command{
 	Long:  `Advent of Code 2024 Solutions`,
 	Run: func(cmd *cobra.Command, args []string) {
 		adventUtils := util.NewAdventUtils(sessionToken)
-		
+
 		input := ""
 		var err error
 		if inputFile != "" {
@@ -35,9 +35,9 @@ var twentyFourCmd = &cobra.Command{
 			fmt.Println(err)
 			return
 		}
-		
+
 		for part := 0; part < 2; part++ {
-			fmt.Printf("Part %d:\n", part + 1)
+			fmt.Printf("Part %d:\n", part+1)
 			sol, err := twentyfour.AOC24Solutions.GetSolution(part, day)(input)
 			if err != nil {
 				fmt.Println(err)
@@ -56,7 +56,7 @@ func init() {
 	twentyFourCmd.MarkFlagFilename("input")
 	twentyFourCmd.Flags().StringVarP(&sessionToken, "session", "s", "", "Session cookie for fetching input from URL")
 	twentyFourCmd.Flags().IntVarP(&day, "day", "d", 1, "Day to run solution for")
-	
+
 	twentyFourCmd.MarkFlagRequired("day")
 	twentyFourCmd.MarkFlagsOneRequired("input", "session")
 	twentyFourCmd.MarkFlagsMutuallyExclusive("input", "session")

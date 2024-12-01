@@ -16,16 +16,16 @@ func init() {
 	}
 }
 
-type Solution=solution.Solution
+type Solution = solution.Solution
 
 type AOC24Client struct {
 	Solutions [2][24]Solution
 }
 
 func (c *AOC24Client) GetSolution(part int, day int) Solution {
-	return c.Solutions[part][day - 1]
+	return c.Solutions[part][day-1]
 }
 
 func (c *AOC24Client) RegisterSolution(part int, day int, s Solution) {
-	c.Solutions[part][day - 1] = s
+	c.Solutions[part][day-1] = s
 }

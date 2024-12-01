@@ -8,10 +8,10 @@ import (
 )
 
 var rootCmd = &cobra.Command{
-	Use: "aoc",
+	Use:   "aoc",
 	Short: "Advent of Code CLI",
-	Long: `Advent of Code CLI`,
-	Args: cobra.MinimumNArgs(1),
+	Long:  `Advent of Code CLI`,
+	Args:  cobra.MinimumNArgs(1),
 	// Run: func(cmd *cobra.Command, args []string) {},
 }
 

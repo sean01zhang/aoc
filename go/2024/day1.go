@@ -4,9 +4,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
-
 )
-
 
 func init() {
 	AOC24Solutions.RegisterSolution(0, 1, Day1Part1)
@@ -30,7 +28,7 @@ func parseDay1(input string) ([]int, []int, error) {
 			return nil, nil, err
 		}
 
-		if i % 2 == 0 {
+		if i%2 == 0 {
 			list1 = append(list1, fieldInt)
 		} else {
 			list2 = append(list2, fieldInt)
@@ -56,7 +54,7 @@ func Day1Part1(input string) (string, error) {
 	for i := range list1 {
 		soln += distance(list1[i], list2[i])
 	}
-	
+
 	return strconv.Itoa(soln), nil
 }
 
@@ -66,16 +64,16 @@ func Day1Part2(input string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	
+
 	counts := make(map[int]int)
 	for _, elem := range list2 {
 		counts[elem]++
 	}
-	
+
 	similarity := 0
 	for _, elem := range list1 {
 		similarity += counts[elem] * elem
 	}
-	
+
 	return strconv.Itoa(similarity), nil
 }

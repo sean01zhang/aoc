@@ -16,7 +16,7 @@ func SetupInput(day string) string {
 		panic(err)
 	}
 	defer f.Close()
-	
+
 	if b, err := io.ReadAll(f); err != nil {
 		panic(err)
 	} else {

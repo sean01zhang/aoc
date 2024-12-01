@@ -9,7 +9,7 @@ type Utils interface {
 
 type AdventUtils struct {
 	netClient *http.Client
-	Session string
+	Session   string
 }
 
 type HTTPClient interface {
@@ -21,6 +21,6 @@ func NewAdventUtils(session string) *AdventUtils {
 
 	return &AdventUtils{
 		netClient: httpClient,
-		Session: session,
+		Session:   session,
 	}
 }
