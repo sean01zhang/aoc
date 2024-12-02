@@ -14,6 +14,8 @@ var (
 	day int
 )
 
+const urlFmtD = "https://adventofcode.com/%d/day/%d/input"
+
 var twentyFourCmd = &cobra.Command{
 	Use:   "2024",
 	Short: "AoC 2024 Solutions",
@@ -24,7 +26,7 @@ var twentyFourCmd = &cobra.Command{
 		if inputFile != "" {
 			input, err = util.GetInputFromFile(inputFile)
 		} else {
-			input, err = util.GetInputFromOnline(fmt.Sprintf(urlFmt, 2024, day), util.WithSession(sessionToken))
+			input, err = util.GetInputFromOnline(fmt.Sprintf(urlFmtD, 2024, day), util.WithSession(sessionToken))
 		}
 		if err != nil {
 			fmt.Println(err)
