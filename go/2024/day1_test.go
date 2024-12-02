@@ -2,42 +2,40 @@ package twentyfour_test
 
 import (
 	"fmt"
-	"io"
-	"os"
 	"testing"
 
-	twentyfour "src.naesna.es/aoc/2024"
+	twentyfour "src.naesna.es/aoc/go/2024"
+	"src.naesna.es/aoc/go/internal/util"
 )
 
 // SetupInput reads the input file for the day and returns the contents as a string.
 func SetupInput(day string) string {
-	f, err := os.Open(fmt.Sprintf("testdata/%s.txt", day))
+	input, err := util.GetInputFromFile(fmt.Sprintf("testdata/%s.txt", day))
 	if err != nil {
 		panic(err)
 	}
-	defer f.Close()
 
-	if b, err := io.ReadAll(f); err != nil {
-		panic(err)
-	} else {
-		return string(b)
-	}
+	return input
 }
 
 func TestDay1Part1(t *testing.T) {
 	input := SetupInput("ex1")
-	got := twentyfour.Day1Part1(input)
-	want := 11
-	if got != want {
+	got, err := twentyfour.Day1Part1(input)
+	if err != nil {
+		t.Errorf("Day1Part1() error = %v; want nil", err)
+	}
+	if want := "11"; got != want {
 		t.Errorf("Day1Part1() = %d; want %d", got, want)
 	}
 }
 
 func TestDay1Part2(t *testing.T) {
 	input := SetupInput("ex1")
-	got := twentyfour.Day1Part2(input)
-	want := 31
-	if got != want {
+	got, err := twentyfour.Day1Part2(input)
+	if err != nil {
+		t.Errorf("Day1Part2() error = %v; want nil", err)
+	}
+	if want := "31"; got != want {
 		t.Errorf("Day1Part2() = %d; want %d", got, want)
 	}
 }

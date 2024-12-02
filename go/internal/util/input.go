@@ -7,7 +7,13 @@ import (
 	"os"
 )
 
-func (a AdventUtils) GetInputFromFile(path string) (string, error) {
+// HTTPClient is an interface that defines the Do method.
+type HTTPClient interface {
+	Do(*http.Request) (*http.Response, error)
+}
+
+// GetInputFromOnline fetches the text from the given filepath.
+func GetInputFromFile(path string) (string, error) {
 	f, err := os.Open(path)
 	if err != nil {
 		return "", err
@@ -21,14 +27,35 @@ func (a AdventUtils) GetInputFromFile(path string) (string, error) {
 	}
 }
 
-func (a AdventUtils) GetInputFromOnline(url string) (string, error) {
+type onlineInputOpts struct {
+	Session   string
+	netClient HTTPClient
+}
+
+type OnlineInputOpt func(*onlineInputOpts)
+
+func WithSession(session string) OnlineInputOpt {
+	return func(o *onlineInputOpts) {
+		o.Session = session
+	}
+}
+
+// GetInputFromOnline fetches the body text from the given URL.
+func GetInputFromOnline(url string, opts ...OnlineInputOpt) (string, error) {
+	inputOpts := onlineInputOpts{
+		netClient: http.DefaultClient,
+	}
+	for _, o := range opts {
+		o(&inputOpts)
+	}
+
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return "", err
 	}
-	req.Header.Set("Cookie", fmt.Sprintf("session=%s", a.Session))
+	req.Header.Set("Cookie", fmt.Sprintf("session=%s", inputOpts.Session))
 
-	resp, err := a.netClient.Do(req)
+	resp, err := inputOpts.netClient.Do(req)
 	if err != nil {
 		return "", err
 	}

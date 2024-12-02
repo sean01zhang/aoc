@@ -22,14 +22,12 @@ var twentyFourCmd = &cobra.Command{
 	Short: "AoC 2024 Solutions",
 	Long:  `Advent of Code 2024 Solutions`,
 	Run: func(cmd *cobra.Command, args []string) {
-		adventUtils := util.NewAdventUtils(sessionToken)
-
 		input := ""
 		var err error
 		if inputFile != "" {
-			input, err = adventUtils.GetInputFromFile(inputFile)
+			input, err = util.GetInputFromFile(inputFile)
 		} else {
-			input, err = adventUtils.GetInputFromOnline(fmt.Sprintf(urlFmt, 2024, day))
+			input, err = util.GetInputFromOnline(fmt.Sprintf(urlFmt, 2024, day), util.WithSession(sessionToken))
 		}
 		if err != nil {
 			fmt.Println(err)
