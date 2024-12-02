@@ -8,12 +8,9 @@ import (
 	"src.naesna.es/aoc/go/internal/util"
 )
 
-const urlFmt = "https://adventofcode.com/%d/day/%d/input"
-
 var (
 	inputFile    string
 	sessionToken string
-
 	day int
 )
 
@@ -50,9 +47,9 @@ func init() {
 	rootCmd.AddCommand(twentyFourCmd)
 
 	// Install flags
+	twentyFourCmd.Flags().StringVarP(&sessionToken, "session", "s", "", "Session cookie for fetching input from URL")
 	twentyFourCmd.Flags().StringVarP(&inputFile, "input", "i", "", "Input file to run solution on")
 	twentyFourCmd.MarkFlagFilename("input")
-	twentyFourCmd.Flags().StringVarP(&sessionToken, "session", "s", "", "Session cookie for fetching input from URL")
 	twentyFourCmd.Flags().IntVarP(&day, "day", "d", 1, "Day to run solution for")
 
 	twentyFourCmd.MarkFlagRequired("day")

@@ -12,7 +12,6 @@ var rootCmd = &cobra.Command{
 	Short: "Advent of Code CLI",
 	Long:  `Advent of Code CLI`,
 	Args:  cobra.MinimumNArgs(1),
-	// Run: func(cmd *cobra.Command, args []string) {},
 }
 
 func Execute() {
