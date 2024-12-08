@@ -25,7 +25,7 @@ func TestDay1Part1(t *testing.T) {
 		t.Errorf("Day1Part1() error = %v; want nil", err)
 	}
 	if want := "11"; got != want {
-		t.Errorf("Day1Part1() = %d; want %d", got, want)
+		t.Errorf("Day1Part1() = %s; want %s", got, want)
 	}
 }
 
@@ -36,6 +36,16 @@ func TestDay1Part2(t *testing.T) {
 		t.Errorf("Day1Part2() error = %v; want nil", err)
 	}
 	if want := "31"; got != want {
-		t.Errorf("Day1Part2() = %d; want %d", got, want)
+		t.Errorf("Day1Part2() = %s; want %s", got, want)
 	}
 }
+
+func BenchmarkDay1Part1(b *testing.B) {
+	input := SetupInput("day1")
+	b.ResetTimer()
+
+	for n := 0; n < b.N; n++ {
+		twentyfour.Day1Part1(input)
+	}
+}
+
