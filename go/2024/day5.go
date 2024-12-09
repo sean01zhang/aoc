@@ -3,8 +3,11 @@ package twentyfour
 import (
 	"bufio"
 	"io"
+	"slices"
 	"strconv"
 	"strings"
+
+	"src.naesna.es/aoc/go/internal/util"
 )
 
 func init() {
@@ -39,7 +42,7 @@ func parseDay5Input(input string) (map[int][]int, [][]int, error) {
 
 		befores[r] = append(befores[r], l)
 	}
-	
+
 	// getting the instructions
 	instructions := make([][]int, 0)
 	for {
@@ -104,7 +107,71 @@ func Day5Part1(input string) (string, error) {
 	return strconv.Itoa(sumMiddles), nil
 }
 
+func findInvalids(instructions [][]int, befores map[int][]int) []int {
+	invalids := make([]int, 0)
+	for k, instr := range instructions {
+		pageMap := make(map[int]int)
+		isValid := true
+
+		for i := len(instr) - 1; i >= 0; i-- {
+			page := instr[i]
+			pageMap[page] = i
+
+			for _, before := range befores[page] {
+				if j, ok := pageMap[before]; ok {
+					if i < j {
+						isValid = false
+						break
+					}
+				}
+			}
+
+			if !isValid {
+				invalids = append(invalids, k)
+				break
+			}
+		}
+	}
+
+	return invalids
+}
+
 // Day5Part2 is the entry point for Day 5 part 2 solutions.
 func Day5Part2(input string) (string, error) {
-	return "", nil
+	befores, instructions, err := parseDay5Input(input)
+	if err != nil {
+		return "", err
+	}
+
+	sumMedians := 0
+	invalidIdxs := findInvalids(instructions, befores)
+	
+	for _, invalidIdx := range invalidIdxs {
+		instr := instructions[invalidIdx]
+
+		// Create a graph
+		instrGraph := util.NewDAGraph()
+		for _, page := range instr {
+			for _, before := range befores[page] {
+				instrGraph.AddEdge(before, page)
+			}
+		}
+
+		// Get the topology
+		instrTopology := instrGraph.TopologicalSort()
+		instrTopoMap := make(map[int]int)
+		for i, page := range instrTopology {
+			instrTopoMap[page] = i
+		}
+
+		instrIdxs := make([]int, len(instr))
+		for i, page := range instr {
+			instrIdxs[i] = instrTopoMap[page]
+		}
+		slices.Sort(instrIdxs)
+
+		sumMedians += instrTopology[instrIdxs[len(instrIdxs)/2]]
+	}
+
+	return strconv.Itoa(sumMedians), nil
 }
