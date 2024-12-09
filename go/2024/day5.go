@@ -107,35 +107,6 @@ func Day5Part1(input string) (string, error) {
 	return strconv.Itoa(sumMiddles), nil
 }
 
-func findInvalids(instructions [][]int, befores map[int][]int) []int {
-	invalids := make([]int, 0)
-	for k, instr := range instructions {
-		pageMap := make(map[int]int)
-		isValid := true
-
-		for i := len(instr) - 1; i >= 0; i-- {
-			page := instr[i]
-			pageMap[page] = i
-
-			for _, before := range befores[page] {
-				if j, ok := pageMap[before]; ok {
-					if i < j {
-						isValid = false
-						break
-					}
-				}
-			}
-
-			if !isValid {
-				invalids = append(invalids, k)
-				break
-			}
-		}
-	}
-
-	return invalids
-}
-
 // Day5Part2 is the entry point for Day 5 part 2 solutions.
 func Day5Part2(input string) (string, error) {
 	befores, instructions, err := parseDay5Input(input)
@@ -144,33 +115,32 @@ func Day5Part2(input string) (string, error) {
 	}
 
 	sumMedians := 0
-	invalidIdxs := findInvalids(instructions, befores)
-	
-	for _, invalidIdx := range invalidIdxs {
-		instr := instructions[invalidIdx]
-
-		// Create a graph
-		instrGraph := util.NewDAGraph()
-		for _, page := range instr {
+	for _, instruction := range instructions {
+		// Create a graph from pages in instruction.
+		graph := util.NewDAGraph()
+		for _, page := range instruction {
 			for _, before := range befores[page] {
-				instrGraph.AddEdge(before, page)
+				graph.AddEdge(before, page)
 			}
 		}
 
-		// Get the topology
-		instrTopology := instrGraph.TopologicalSort()
-		instrTopoMap := make(map[int]int)
-		for i, page := range instrTopology {
-			instrTopoMap[page] = i
+		// Get the topology.
+		topology := graph.TopologicalSort()
+		pageToTopoIndex := make(map[int]int)
+		for i, page := range topology {
+			pageToTopoIndex[page] = i
 		}
 
-		instrIdxs := make([]int, len(instr))
-		for i, page := range instr {
-			instrIdxs[i] = instrTopoMap[page]
+		instrTopoIdxs := make([]int, len(instruction))
+		for i, page := range instruction {
+			instrTopoIdxs[i] = pageToTopoIndex[page]
 		}
-		slices.Sort(instrIdxs)
 
-		sumMedians += instrTopology[instrIdxs[len(instrIdxs)/2]]
+		// Check if sorted already.
+		if !slices.IsSorted(instrTopoIdxs) {
+			slices.Sort(instrTopoIdxs)
+			sumMedians += topology[instrTopoIdxs[len(instrTopoIdxs)/2]]
+		}
 	}
 
 	return strconv.Itoa(sumMedians), nil

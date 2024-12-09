@@ -48,33 +48,28 @@ func (g *DAGraph) HasCycle() bool {
 	return false
 }
 
-// TopologicalSort returns a topological sort of the graph.
+// TopologicalSort returns a topological sort of the graph. It assumes the graph is a DAG.
 func (g *DAGraph) TopologicalSort() []int {
 	seen := make(map[int]bool)
-	bad := make(map[int]bool)
 	order := make([]int, 0)
 
 	var dfs func(int)
 	dfs = func(node int) {
 		if seen[node] {
 			return
-		} else if bad[node] {
-			panic("cycle detected")
 		}
+
 		seen[node] = true
 
 		for _, neighbor := range g.Adjacencies[node] {
 			dfs(neighbor)
 		}
 
-		bad[node] = true
 		order = append([]int{node}, order...)
 	}
 	
 	for node, _ := range g.Adjacencies {
-		if !bad[node] {
-			dfs(node)
-		}
+		dfs(node)
 	}
 
 	return order
